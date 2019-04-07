@@ -48,18 +48,22 @@ class ChatConsumer(WebsocketConsumer):
             self.channel_name
         )
         self.accept()
+        for key in dictionary.keys():
+            print(dictionary[key])
 
         for key in dictionary.keys():
             if len(dictionary[key]) == 2: #딕셔너리의 크기가 2면
+
                 for j in range(2): #0부터 2까지 반복하고
                     temp = dictionary[key][j-1] #temp 의 객체를 만들고
                     messages = str(dictionary[key][j].phone_num) #그 객체가 가진 전화번호를 메세지로 한다
                     temp.send(text_data=json.dumps({
                         'message': messages #메세지를 클라이언트에 전송한다
                     }))
+                for temp in dictionary[key]:
                     temp.disconnect() #그 후 연결을 끊어버린다.
 
-                dictionary[key] = [] #그러고 그 리스트를 초기화 시킨다.
+
 
 
 
@@ -71,6 +75,17 @@ class ChatConsumer(WebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
+
+        for key in dictionary.keys(): #로그아웃 하는경우 객체를 지워버린다.
+            for j in dictionary[key]:
+                if j == self:
+                    try:
+                        dictionary[key].remove(j)
+                        break
+                    except:
+                        pass
+        for key in dictionary.keys():
+            print(dictionary[key])
 
 # 여기서 부턴 필요없는 메소드들
 
