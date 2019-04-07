@@ -72,7 +72,7 @@ class ChatConsumer(WebsocketConsumer):
             self.channel_name
         )
 
-# 여기서 부턴 필요없는 메소드들 
+# 여기서 부턴 필요없는 메소드들
 
     # 웹서버로부터 정보를 받는다
     def receive(self, text_data):
